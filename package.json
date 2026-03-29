@@ -12,14 +12,18 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "22": "^0.0.0",
+    "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.5.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "pg": "^8.20.0",
     "redis": "^4.6.13",
     "socket.io": "^4.7.4",
+    "socket.io-client": "^4.8.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
