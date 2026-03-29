@@ -30,7 +30,7 @@ export interface MarkAsReadPayload {
 // Events sent from client to server
 
 export interface ClientToServerEvents {
-    send_message: (payload: SendMessagePayload, ack: (res: AckResponse) => void) => void;
+    send_message: (payload: SendMessagePayload, ack: (res: AckResponse<MessageDTO>) => void) => void;
     join_room: (payload: JoinRoomPayload, ack: (res: AckResponse) => void) => void;
     leave_room: (payload: LeaveRoomPayload) => void;
     typing: (payload: TypingPayload) => void;
