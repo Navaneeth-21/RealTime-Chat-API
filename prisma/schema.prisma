@@ -1,0 +1,101 @@
+// src/prisma/schema.prisma
+
+// This is your Prisma schema file,
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages     Message[]
+  memberships  RoomMember[]
+  readReceipts ReadReceipt[]
+
+  @@map("users")
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  isPrivate   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  messages Message[]
+  members  RoomMember[]
+
+  @@map("rooms")
+}
+
+model Message {
+  id        String      @id @default(uuid())
+  content   String
+  type      MessageType @default(TEXT)
+  createdAt DateTime    @default(now())
+
+  roomId   String
+  senderId String
+
+  room         Room          @relation(fields: [roomId],   references: [id], onDelete: Cascade)
+  sender       User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  readReceipts ReadReceipt[]
+
+  @@index([roomId, createdAt])
+  @@map("messages")
+}
+
+model RoomMember {
+  id       String         @id @default(uuid())
+  role     RoomMemberRole @default(MEMBER)
+  joinedAt DateTime       @default(now())
+
+  userId String
+  roomId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+  @@map("room_members")
+}
+
+model ReadReceipt {
+  id        String   @id @default(uuid())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  roomId    String
+  messageId String
+
+  user    User    @relation(fields: [userId],    references: [id], onDelete: Cascade)
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+  @@map("read_receipts")
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  SYSTEM
+}
+
+enum RoomMemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
