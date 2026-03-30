@@ -2,7 +2,7 @@
   "name": "realtime-chat-api",
   "version": "1.0.0",
   "description": "Real-time Chat API — Node.js + TypeScript + Socket.io + Redis + PostgreSQL",
-  "main": "app.ts",
+  "main": "src/app.ts",
   "scripts": {
     "dev": "ts-node src/app.ts",
     "build": "tsc",
