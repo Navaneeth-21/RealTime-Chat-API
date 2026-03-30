@@ -17,10 +17,16 @@ import { logger } from './utils/logger';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
+logger.info('Starting server...');
 async function boostrap(): Promise<void> {
 
     // 1. Connect Redis-----------------------------------
-    await initRedis();
+    try {
+        await initRedis();
+        logger.info("✅ Redis connected");
+    } catch (err) {
+        logger.error("❌ Redis failed to connect:", err);
+    }
 
 
     // 2. Express app -------------------------------------
