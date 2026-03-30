@@ -2,11 +2,11 @@
   "name": "realtime-chat-api",
   "version": "1.0.0",
   "description": "Real-time Chat API — Node.js + TypeScript + Socket.io + Redis + PostgreSQL",
-  "main": "dist/app.ts",
+  "main": "app.ts",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
-    "start": "node dist/app.ts",
+    "start": "node app.ts",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio"
