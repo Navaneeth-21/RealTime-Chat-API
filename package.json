@@ -4,9 +4,9 @@
   "description": "Real-time Chat API — Node.js + TypeScript + Socket.io + Redis + PostgreSQL",
   "main": "app.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "dev": "ts-node src/app.ts",
     "build": "tsc",
-    "start": "node app.ts",
+    "start": "ts-node src/app.ts",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio"
