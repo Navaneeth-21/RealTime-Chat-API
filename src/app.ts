@@ -62,7 +62,7 @@ async function boostrap(): Promise<void> {
 
     // 6. Listen ---------------------------------------------------
     await new Promise<void>((resolve) => {
-        httpServer.listen(PORT, () => {
+        httpServer.listen(PORT, '0.0.0.0', () => {
             logger.info(`Server is running on port http://localhost:${PORT}`);
             logger.info(`Websocket on port ws://localhost:${PORT}`);
             logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
