@@ -23,9 +23,9 @@ async function boostrap(): Promise<void> {
     // 1. Connect Redis-----------------------------------
     try {
         await initRedis();
-        logger.info("✅ Redis connected");
+        logger.info("Redis connected");
     } catch (err) {
-        logger.error("❌ Redis failed to connect:", err);
+        logger.error(" Redis failed to connect:", err);
     }
 
 
