@@ -38,7 +38,6 @@ import {
     removeOnlineUser,
 } from "../../redis/cache";
 import { logger } from "../../utils/logger";
-import { join } from "path";
 
 
 type ChatSocket = Socket<ClientToServerEvents, ServerToClientEvents, Record<string, never>, SocketData>;
