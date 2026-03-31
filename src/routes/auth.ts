@@ -94,6 +94,7 @@ router.post('/login', async (req: Request, res: Response) => {
             password?: string,
         }
 
+        // Validation
         if (!email?.trim() || !password) {
             return res.status(400).json({error: 'Missing required fields'});
         }
@@ -103,7 +104,7 @@ router.post('/login', async (req: Request, res: Response) => {
         });
 
         // constant time comparison - run bcrypt if user not found also
-        // so response time is identical whether email exists or not
+        // so the response time will be identical whether email exists or not
 
         const DUMMY = '$2a$10$vnioesvjosejpkvr['
         const valid = user ? (await bcrypt.compare(password, user.password)) : (await bcrypt.compare(password, DUMMY), false);
