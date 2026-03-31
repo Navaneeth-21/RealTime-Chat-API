@@ -1,6 +1,7 @@
 # Real-time Chat API
 
-A robust and scalable ***real-time chat API*** built with Node.js, TypeScript, Socket.io, Redis, and PostgreSQL. This project provides the backend services for a modern chat application, featuring user authentication, room management, real-time messaging, and presence tracking.
+A scalable, production-ready **real-time messaging backend** built with Socket.IO, Redis, and PostgreSQL.  
+Supports multi-user chat rooms, instant message broadcasting, and high-performance caching.
 
 # Problem Statement
 Most chat apps in portfolios are using polling, no auth, no persistence, and break the moment two server instances run. This project builds the real thing: a horizontally scalable, authenticated, real-time messaging API that works across multiple server instances using Redis as the message bus. It's a production-ready backend for a chat application.
@@ -29,7 +30,7 @@ This project solves the following problems:
 - **Caching & Pub/Sub**: Redis
 - **Language**: TypeScript
 - **Authentication**: JWT (JSON Web Tokens), bcrypt
-- **Deployment**: Supabase(postgres), Upstash(redis), Render(application host)
+- **Deployment**: Supabase (Postgres), Upstash (redis), Render (application host)
 
 ## Architecture Overview
 
@@ -111,7 +112,7 @@ The database schema is defined in `prisma/schema.prisma` and includes the follow
     ```bash
     npx prisma generate
     ```
-5. Testing
+5. Testing (NOTE: Replace the urls with the actual ones)
     ```bash
     ts-node src/test-multiuser.ts
    ```
