@@ -11,7 +11,6 @@ import {
     MessageDTO,
 } from '../types/socket.types';
 import { logger } from '../utils/logger';
-import { get } from 'http';
 
 
 // Channel helpers
