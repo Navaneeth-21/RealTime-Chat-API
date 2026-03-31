@@ -6,7 +6,7 @@
 
 **/
 
-// src/middleware/auth.ts
+
 import { Request, Response, NextFunction } from 'express';
 import { Socket } from 'socket.io';
 import jwt from 'jsonwebtoken';
@@ -28,7 +28,7 @@ declare global {
   }
 }
 
-// ==================== HTTP AUTH MIDDLEWARE ====================
+// -------------- HTTP AUTH MIDDLEWARE --------------------
 export function httpAuthMiddleware(
   req: Request,
   res: Response,
@@ -40,7 +40,7 @@ export function httpAuthMiddleware(
 
     if (!token) {
       res.status(401).json({ error: 'Unauthorized' });
-      return;                    // ← Important: explicit return
+      return;                    
     }
 
     const payload = jwt.verify(
@@ -52,11 +52,11 @@ export function httpAuthMiddleware(
     next();
   } catch (err) {
     res.status(401).json({ error: 'Unauthorized' });
-    return;                      // ← Important: explicit return
+    return;
   }
 }
 
-// ==================== SOCKET AUTH MIDDLEWARE ====================
+// -------------- SOCKET AUTH MIDDLEWARE --------------------
 export function socketAuthMiddleware(
   socket: Socket<ClientToServerEvents, ServerToClientEvents, Record<string, never>, SocketData>,
   next: (err?: Error) => void
@@ -65,7 +65,7 @@ export function socketAuthMiddleware(
     let token: string | undefined;
 
     // Detailed debug logging
-    logger.info('=== SOCKET HANDSHAKE DEBUG ===');
+    logger.info('*** SOCKET HANDSHAKE DEBUG *****');
     logger.info(`Socket ID: ${socket.id}`);
     logger.info(`Auth object: ${JSON.stringify(socket.handshake.auth)}`);
     logger.info(`Headers.authorization: ${socket.handshake.headers.authorization}`);
@@ -82,7 +82,7 @@ export function socketAuthMiddleware(
       token = header.startsWith('Bearer ') ? header.slice(7) : header;
       logger.info('Token found in headers.authorization');
     }
-    // 3. From query parameter (?token=xxx) - this is what wscat is using
+    // 3. From query parameter 
     else if (socket.handshake.query.token) {
       token = socket.handshake.query.token as string;
       logger.info('Token found in query.token');
@@ -110,18 +110,18 @@ export function socketAuthMiddleware(
       avatar: payload.avatar,
     };
 
-    logger.info(`✅ SUCCESS: Socket authenticated for ${payload.username}`);
+    logger.info(`SUCCESS: Socket authenticated for ${payload.username}`);
     logger.info(`JWT_SECRET used: ${process.env.JWT_SECRET}`);
     next();
 
   } catch (err: any) {
-  logger.error(`❌ AUTH ERROR FULL: ${JSON.stringify(err, null, 2)}`);
-  logger.error(`❌ MESSAGE: ${err.message}`);
+  logger.error(`AUTH ERROR FULL: ${JSON.stringify(err, null, 2)}`);
+  logger.error(`MESSAGE: ${err.message}`);
   next(new Error('Unauthorized'));
 }
 }
 
-// ==================== TOKEN GENERATOR ====================
+// ---------- TOKEN GENERATOR -----------------------------------------------------------
 export function generateToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): string {
   return jwt.sign(payload, process.env.JWT_SECRET as string, { 
     expiresIn: "7d" 
